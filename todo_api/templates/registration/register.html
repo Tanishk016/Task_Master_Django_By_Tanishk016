@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>🚀 Join the Club</h2>
+        <p class="subtitle">Create an account to start tracking your tasks.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div class="error-banner">
+                    Please correct the errors below.
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    
+                    {{ field }}
+                    
+                    {% if field.errors %}
+                        <div class="field-error">
+                            {{ field.errors.0 }}
+                        </div>
+                    {% endif %}
+                    
+                    {% if field.help_text %}
+                        <small class="help-text">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn-primary">Create Account</button>
+        </form>
+
+        <div class="footer-links">
+            <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh; /* Taller because register form is longer */
+        background-color: #f4f6f8;
+        padding: 20px;
+    }
+    .auth-card {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+    h2 { margin-bottom: 10px; color: #333; }
+    .subtitle { color: #666; margin-bottom: 25px; font-size: 0.9em; }
+    
+    .form-group { margin-bottom: 20px; text-align: left; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; color: #444; font-size: 0.9em; }
+    
+    /* 🎯 This targets the inputs Django generates automatically */
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    .form-group input:focus { border-color: #007bff; outline: none; }
+    
+    .btn-primary {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745; /* Green for Sign Up! */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 10px;
+    }
+    .btn-primary:hover { background-color: #218838; }
+    
+    .error-banner {
+        background-color: #ffe6e6;
+        color: #d63031;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-size: 0.9em;
+    }
+    .field-error { color: #d63031; font-size: 0.85em; margin-top: 5px; }
+    .help-text { display: block; color: #888; font-size: 0.75em; margin-top: 5px; }
+    
+    .footer-links { margin-top: 20px; font-size: 0.9em; }
+    .footer-links a { color: #007bff; text-decoration: none; }
+</style>
+{% endblock %}

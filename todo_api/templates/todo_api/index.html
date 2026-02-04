@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Professional To-Do</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; padding-top: 50px; display: flex; justify-content: center; }
+        .card { background: white; width: 450px; padding: 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        
+        /* 🆕 User Header Styling */
+        .user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .user-name { color: #7f8c8d; font-size: 0.9em; font-weight: bold; }
+        .btn-logout { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 0.9em; font-weight: bold; }
+        .btn-logout:hover { text-decoration: underline; }
+
+        h1 { text-align: center; color: #2c3e50; font-weight: 600; margin-top: 0; }
+        
+        /* The Form Styling */
+        .add-form { display: flex; gap: 10px; margin-bottom: 25px; }
+        .add-form input { flex: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; outline: none; transition: 0.3s; }
+        .add-form input:focus { border-color: #3498db; }
+        .btn-add { background: #3498db; color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        
+        /* The List Styling */
+        ul { list-style: none; padding: 0; }
+        li { background: #fff; border-bottom: 1px solid #f0f0f0; padding: 15px 0; display: flex; justify-content: space-between; align-items: center; }
+        .task-text { font-size: 16px; color: #34495e; }
+        .completed { text-decoration: line-through; color: #bdc3c7; }
+
+        /* Action Buttons */
+        .actions { display: flex; gap: 8px; }
+        .btn-icon { background: none; border: none; cursor: pointer; font-size: 1.2rem; transition: transform 0.2s; }
+        .btn-icon:hover { transform: scale(1.2); }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    
+    <div class="user-header">
+        <span class="user-name">👤 {{ user.username }}</span>
+        
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-logout">Logout ➜</button>
+        </form>
+    </div>
+
+    <h1>📝 Task Master</h1>
+
+    <form method="POST" class="add-form">
+        {% csrf_token %}
+        {{ form.title }} 
+        <button type="submit" class="btn-add">ADD</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <span class="task-text {% if task.completed %}completed{% endif %}">
+                    <strong>{{ forloop.counter }}.</strong> {{ task.title }}
+                </span>
+
+                <div class="actions">
+                    <a href="{% url 'edit_task' task.id %}" class="btn-icon" style="text-decoration: none;">✏️</a>
+
+                    <form action="{% url 'toggle_task' task.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-icon">
+                            {% if task.completed %}↩️{% else %}✅{% endif %}
+                        </button>
+                    </form>
+
+                    <form action="{% url 'delete_task' task.id %}" method="POST" style="display:inline;">
+                     {% csrf_token %}
+                        <button type="submit" class="btn-icon" onclick="confirmDelete(event)">❌</button>
+                    </form>
+                </div>
+            </li>
+        {% empty %}
+            <li style="text-align: center; color: #999;">All caught up! 🎉</li>
+        {% endfor %}
+    </ul>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmDelete(event) {
+        // Stop the form from submitting immediately
+        event.preventDefault(); 
+        
+        // Find the form that belongs to this specific button
+        const form = event.target.closest('form');
+
+        // Show the Funky Popup
+        Swal.fire({
+            title: 'Wait a minute... 🧐',
+            text: "You sure......?! This can't be undone!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',  // Red for danger
+            cancelButtonColor: '#3085d6', // Blue for calm
+            confirmButtonText: 'Yes, Nuke it! 💥',
+            cancelButtonText: 'Nah, keep it 😇'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If they say yes, manually submit the form
+                form.submit();
+            }
+        });
+    }
+</script>
+</body>
+</html>
