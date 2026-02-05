@@ -48,7 +48,8 @@ Make sure you have **Python** and **Git** installed on your computer.
 Open your terminal/command prompt and run:
 ```bash
 git clone [https://github.com/YOUR_USERNAME/task-master-django.git](https://github.com/YOUR_USERNAME/task-master-django.git)
-cd task-master-django ``` 
+cd task-master-django
+```
 
 
 ### 3. Create a Virtual Environment
@@ -65,46 +66,60 @@ source venv/bin/activate
 
 
 
-4. Install Dependencies
+### 4. Install Dependencies
 This project requires Django. You can install it manually or from the requirements file.
 
 Option A: Install from list (Recommended)
 
 Bash
+```
 pip install -r requirements.txt
+```
 Option B: Manual Install
 
 Bash
+```
 pip install django
+```
 
 
 
-5. Set Up the Database
+### 5. Set Up the Database
 Create the necessary database tables (migrations).
 
 Bash
+```
 python manage.py migrate
+```
 
 
 
-6. Create a Superuser (Optional)
+### 6. Create a Superuser (Optional)
 If you want to access the Admin Panel:
 
 Bash
+```
 python manage.py createsuperuser
+```
 
 
 
-7. Run the Server
+### 7. Run the Server
 Start the application!
 
 Bash
+```
 python manage.py runserver
+```
 
 
 
-8. Access the App
-Open your browser and visit: 👉 https://www.google.com/search?q=http://127.0.0.1:8000/
+### 8. Access the App
+Open your browser and visit: 👇
+```
+ https://www.google.com/search?q=http://127.0.0.1:8000
+
+```
 
 
 
@@ -112,7 +127,7 @@ Open your browser and visit: 👉 https://www.google.com/search?q=http://127.0.0
 
 -----------------------------------------------------------------------------------
 
-##### 👤 Author
-####  Designed & Developed by Tanishk Built with ❤️ using Django 
+# 👤 Author 
+## Designed & Developed by Tanishk Built with ❤️ using Django 
 
 -----------------------------------------------------------------------------------
