@@ -48,7 +48,7 @@ Make sure you have **Python** and **Git** installed on your computer.
 Open your terminal/command prompt and run:
 ```bash
 git clone [https://github.com/YOUR_USERNAME/task-master-django.git](https://github.com/YOUR_USERNAME/task-master-django.git)
-cd task-master-django
+cd task-master-django '''
 
 
 ### 3. Create a Virtual Environment
