@@ -51,10 +51,10 @@ git clone [https://github.com/YOUR_USERNAME/task-master-django.git](https://gith
 cd task-master-django
 
 
-3. Create a Virtual Environment
+### 3. Create a Virtual Environment
 It is best practice to keep dependencies isolated so they don't mess up your system.
 
-Bash
+Bash**
 # On Windows
 python -m venv venv
 .\venv\Scripts\activate
